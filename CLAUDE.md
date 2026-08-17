@@ -4,17 +4,36 @@
 
 ## プロジェクト概要
 
-task-board プロジェクト。
+task-board プロジェクト。React製のシンプルなタスク管理（ToDo）アプリ。
 
-<!-- TODO: プロジェクトの目的・機能概要を記載してください -->
+- テキスト入力でタスクを追加できる
+- チェックボックスで完了・未完了を切り替えられる
+- タスクを削除できる
+- 完了済みのタスクはグレーで表示する
+- タスクはlocalStorageに保存され、ページをリロードしても消えない
+
+## デプロイ先
+
+https://izuoffice.github.io/task-board/
+
+- `main` ブランチへのプッシュをトリガーに、GitHub Actions（[.github/workflows/deploy.yml](.github/workflows/deploy.yml)）が自動でビルド・デプロイを行う。
+- GitHub Pagesのプロジェクトページとして公開するため、本番ビルド時のbase pathは `/task-board/`（[vite.config.js](vite.config.js)）。
 
 ## 技術スタック
 
-<!-- TODO: 使用する言語・フレームワーク・ライブラリが決まったら記載してください -->
+- React 18
+- Vite 5（ビルドツール・開発サーバー）
+- プレーンCSS（CSSフレームワーク・CSS-in-JSは未使用）
+- 状態管理: Reactの `useState` / `useEffect` のみ（外部の状態管理ライブラリは未使用）
+- データ永続化: ブラウザの `localStorage`（バックエンド・DBは無し）
+- CI/CD: GitHub Actions（GitHub Pagesへの自動デプロイ）
 
 ## 開発コマンド
 
-<!-- TODO: セットアップ・起動・テスト・ビルドなどのコマンドが決まったら記載してください -->
+- `npm install` — 依存パッケージのインストール
+- `npm run dev` — 開発サーバーの起動（デフォルト: http://localhost:5173 ）
+- `npm run build` — 本番ビルド（`dist/` に出力）
+- `npm run preview` — ビルド済みファイルをローカルでプレビュー
 
 ## Git運用ルール
 
@@ -38,4 +57,12 @@ task-board プロジェクト。
 
 ## コーディング規約
 
-<!-- TODO: コードスタイル・命名規則などが決まったら記載してください -->
+### コンポーネントの命名規約
+
+- コンポーネントのファイル名・関数名はPascalCase（例: `App.jsx` の `App`）。
+- 1ファイル1コンポーネントを基本とする。
+- コンポーネントは関数コンポーネント（`function` 宣言）で記述し、`export default` する。
+- コンポーネント用のCSSは同名の `.css` ファイルに分け、対応するコンポーネントと同じ階層に置く（例: `App.jsx` ⇔ `App.css`）。共通のグローバルスタイルは `index.css` に置く。
+- props・state・関数・変数はcamelCase（例: `toggleTask`, `deleteTask`）。
+- 定数はSCREAMING_SNAKE_CASE（例: `STORAGE_KEY`）。
+- イベントハンドラは `on〜`（props経由で渡す場合）または `handle〜` / 動詞（コンポーネント内定義の場合、例: `addTask`, `toggleTask`）で命名する。
